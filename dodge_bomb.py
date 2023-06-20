@@ -93,15 +93,14 @@ def main():
                 total_mv[0] += mv[0]
                 total_mv[1] += mv[1]
         rect_kk_img.move_ip(total_mv)
+        
         if check_bound(rect_kk_img) != (True, True):
             rect_kk_img.move_ip(-total_mv[0], -total_mv[1])
         
         screen.blit(bg_img, [0, 0])
         #押下されたキーにしたがって，kk_imgをrotozoomしたSurfaceをblitする
         screen.blit(direction_d[tuple(total_mv)], rect_kk_img)  
-
         #avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  検討中
-
         rect_bb_img.move_ip(vx, vy)
         yoko, tate = check_bound(rect_bb_img)
         if not yoko:
