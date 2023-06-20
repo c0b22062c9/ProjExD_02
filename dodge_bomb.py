@@ -31,7 +31,28 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    #ここから3行は左向きの三体のSurfaceを作っている
+    kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  
+    kk_img2 = pg.transform.rotozoom(kk_img, 45, 1.0)
+    kk_img3 = pg.transform.rotozoom(kk_img, 315, 1.0)
+    #ここから6行は右向きの五体のSurfaceを作っている
+    kk_img4 = pg.transform.flip(kk_img, True, False)  
+    kk_img4 = pg.transform.rotozoom(kk_img4, 0, 1.0)
+    kk_img5 = pg.transform.rotozoom(kk_img4, 45, 1.0)
+    kk_img6 = pg.transform.rotozoom(kk_img4, 90, 1.0)
+    kk_img7 = pg.transform.rotozoom(kk_img4, 315, 1.0)
+    kk_img8 = pg.transform.rotozoom(kk_img4, 270, 1.0)
+    direction_d = {
+        (0, 0):kk_img,
+        (-5, 0):kk_img,
+        (-5, +5):kk_img2,
+        (-5, -5):kk_img3,
+        (+5, 0): kk_img4,
+        (+5, -5):kk_img5,
+        (0, -5):kk_img6,
+        (+5, +5):kk_img7,
+        (0, +5):kk_img8
+    }
     rect_kk_img = kk_img.get_rect()
     rect_kk_img.center = 900, 400
     bb_img = pg.Surface((20, 20))  #練習Ⅰ
@@ -64,9 +85,11 @@ def main():
         rect_kk_img.move_ip(total_mv)
         if check_bound(rect_kk_img) != (True, True):
             rect_kk_img.move_ip(-total_mv[0], -total_mv[1])
-
+        
         screen.blit(bg_img, [0, 0])
-        screen.blit(kk_img, rect_kk_img)
+        #押下されたキーにしたがって，kk_imgをrotozoomしたSurfaceをblitする
+        screen.blit(direction_d[tuple(total_mv)], rect_kk_img)  #
+
         rect_bb_img.move_ip(vx, vy)
         yoko, tate = check_bound(rect_bb_img)
         if not yoko:
