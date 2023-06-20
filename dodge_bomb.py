@@ -55,6 +55,7 @@ def main():
     }
     rect_kk_img = kk_img.get_rect()
     rect_kk_img.center = 900, 400
+    accs = [a for a in range(1, 11)]  #爆弾の加速度のリスト
     bb_img = pg.Surface((20, 20))  #練習Ⅰ
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0))
@@ -66,6 +67,15 @@ def main():
     vx, vy = +5, +5  #練習2 
     clock = pg.time.Clock()
     tmr = 0
+    """whileまでの以下のコードは追加課題2の途中
+    avx = 0
+    avy = 0
+    bb_imgs = []
+    for r in range(1, 11):
+        bb_img = pg.Surface((20*r, 20*r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        bb_imgs.append(bb_img)
+    avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)] """
 
     while True:
         for event in pg.event.get():
@@ -88,7 +98,9 @@ def main():
         
         screen.blit(bg_img, [0, 0])
         #押下されたキーにしたがって，kk_imgをrotozoomしたSurfaceをblitする
-        screen.blit(direction_d[tuple(total_mv)], rect_kk_img)  #
+        screen.blit(direction_d[tuple(total_mv)], rect_kk_img)  
+
+        #avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  検討中
 
         rect_bb_img.move_ip(vx, vy)
         yoko, tate = check_bound(rect_bb_img)
