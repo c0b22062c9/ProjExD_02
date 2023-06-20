@@ -50,6 +50,11 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        
+        if rect_kk_img.colliderect(rect_bb_img):  #練習5
+            print("Game Over")
+            return  #ゲーム終了
+
         key_lst = pg.key.get_pressed()
         total_mv =  [0, 0]
         for k, mv in move_d.items():
